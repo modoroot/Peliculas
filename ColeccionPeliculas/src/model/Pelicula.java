@@ -7,7 +7,8 @@ package model;
  * @version 1.0
  */
 public class Pelicula {
-
+	
+	//Atributos de la clase
 	private int id;
 	private String titulo;
 	private String genero;

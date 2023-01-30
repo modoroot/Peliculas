@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: #21917f;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControladorPeliculas">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="1200.0" style="-fx-background-color: #1e75c7;">
+      <MenuBar fx:id="menuBar1" prefHeight="25.0" prefWidth="1200.0" style="-fx-background-color: #1e75c7;">
         <menus>
           <Menu mnemonicParsing="false" text="Registro">
             <items>
@@ -32,9 +32,9 @@
       </MenuBar>
       <TableView fx:id="tablaPeliculas" editable="true" layoutY="167.0" onMouseClicked="#manejadorClick" prefHeight="435.0" prefWidth="1200.0" style="-fx-background-color: #21917f;">
         <columns>
-          <TableColumn fx:id="colId" prefWidth="62.0" text="ID" />
-          <TableColumn fx:id="colTitulo" prefWidth="170.0" text="Título" />
-            <TableColumn fx:id="colGenero" prefWidth="122.0" text="Género" />
+          <TableColumn fx:id="columnId" prefWidth="62.0" text="ID" />
+          <TableColumn fx:id="columnTitulo" prefWidth="170.0" text="Título" />
+            <TableColumn fx:id="columnGenero" prefWidth="122.0" text="Género" />
             <TableColumn fx:id="columnDuracion" prefWidth="125.0" text="Duración" />
             <TableColumn fx:id="columnSinopsis" prefWidth="204.0" text="Sinopsis" />
             <TableColumn fx:id="columnIdioma" prefWidth="127.0" text="Idioma" />
@@ -68,14 +68,14 @@
             </ImageView>
          </graphic></Button>
       <Separator layoutX="193.0" layoutY="25.0" orientation="VERTICAL" prefHeight="142.0" prefWidth="0.0" />
-      <TextField fx:id="txtTitulo" layoutX="311.0" layoutY="84.0" />
+      <TextField fx:id="tfTitulo" layoutX="311.0" layoutY="84.0" />
       <TextField fx:id="tfGenero" layoutX="311.0" layoutY="127.0" />
       <TextField fx:id="tfDuracion" layoutX="600.0" layoutY="42.0" />
       <TextField fx:id="tfSinopsis" layoutX="600.0" layoutY="84.0" />
       <TextField fx:id="tfIdioma" layoutX="600.0" layoutY="127.0" />
       <TextField fx:id="tfPais" layoutX="865.0" layoutY="42.0" />
       <TextField fx:id="tfActores" layoutX="865.0" layoutY="84.0" />
-      <TextField fx:id="txtId" layoutX="311.0" layoutY="42.0" />
+      <TextField fx:id="tfId" layoutX="311.0" layoutY="42.0" />
       <TextField fx:id="tfFotografia" layoutX="865.0" layoutY="128.0" />
       <Label layoutX="273.0" layoutY="46.0" text="ID" />
       <Label layoutX="264.0" layoutY="88.0" text="Título" />

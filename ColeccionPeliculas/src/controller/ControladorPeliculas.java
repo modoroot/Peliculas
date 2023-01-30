@@ -14,8 +14,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -24,10 +27,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import model.Pelicula;
 
 public class ControladorPeliculas implements Initializable {
-
+	//Atributos creados en los ficheros FXML InterfazTabla y InterfazModal
 	@FXML
 	private Button btnEditar;
 
@@ -47,13 +51,13 @@ public class ControladorPeliculas implements Initializable {
 	private Button btnCancelar;
 
 	@FXML
-	private TableColumn<Pelicula, String> colGenero;
+	private TableColumn<Pelicula, String> columnGenero;
 
 	@FXML
-	private TableColumn<Pelicula, Integer> colId;
+	private TableColumn<Pelicula, Integer> columnId;
 
 	@FXML
-	private TableColumn<Pelicula, String> colTitulo;
+	private TableColumn<Pelicula, String> columnTitulo;
 
 	@FXML
 	private TableColumn<Pelicula, String> columnActores;
@@ -95,13 +99,13 @@ public class ControladorPeliculas implements Initializable {
 	private TextField tfSinopsis;
 
 	@FXML
-	private TextField txtTitulo;
+	private TextField tfTitulo;
 
 	@FXML
 	private TextField tfFotografia;
 
 	@FXML
-	private TextField txtId;
+	private TextField tfId;
 
 	@FXML
 	private MenuItem menuItemActualizar;
@@ -111,24 +115,30 @@ public class ControladorPeliculas implements Initializable {
 
 	@FXML
 	private MenuItem menuItemNuevo;
-
+	
+	@FXML
+	private MenuBar menuBar1;
+	/**
+	 * Método que muestra una ventana modal para añadir un registro
+	 * @param event
+	 */
 	@FXML
 	void nuevoRegistroMenu(ActionEvent event) {
-		showModal();
-	}
-
-	private void showModal() {
-		FXMLLoader loader = new FXMLLoader();
 		try {
-		    loader.setLocation(getClass().getResource("/view/InterfazModalNuevoRegistro.fxml"));
-		    Scene scene = new Scene(loader.load());
-		    Stage modal = new Stage();
-		    modal.initModality(Modality.APPLICATION_MODAL);
-		    modal.setScene(scene);
-		    modal.show();
+			Stage stage = new Stage();
+			Parent root;
+			//carga el FXML de la ventana modal
+			root = FXMLLoader.load(ControladorPeliculas.class.getResource("/view/InterfazModalNuevoRegistro.fxml"));
+			stage.setScene(new Scene(root));
+			stage.setTitle("My modal window");
+			stage.initModality(Modality.WINDOW_MODAL);
+				  stage.initOwner(
+				    ( (Node) event.getSource()).getScene().getWindow());
+			stage.show();
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
+
 	}
 
 	/**
@@ -180,9 +190,10 @@ public class ControladorPeliculas implements Initializable {
 	@FXML
 	void manejadorClick(MouseEvent event) {
 		try {
+			//Instancia de un objeto de la clase pelicula para invocar sus Getters y Setters
 			Pelicula pelicula = tablaPeliculas.getSelectionModel().getSelectedItem();
-			txtId.setText("" + pelicula.getId());
-			txtTitulo.setText(pelicula.getTitulo());
+			tfId.setText("" + pelicula.getId());
+			tfTitulo.setText(pelicula.getTitulo());
 			tfGenero.setText(pelicula.getGenero());
 			tfDuracion.setText(pelicula.getDuracion());
 			tfSinopsis.setText(pelicula.getSinopsis());
@@ -204,6 +215,7 @@ public class ControladorPeliculas implements Initializable {
 	public Connection getConnection() {
 		Connection conn = null;
 		try {
+			//Conexión a la DB
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/peliculas", "root", "root");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -214,7 +226,7 @@ public class ControladorPeliculas implements Initializable {
 
 	/**
 	 * Realiza una consulta de selección a la DB y guarda en la variable tipo
-	 * ObservableList los registros de la DB en un ArrayList
+	 * ObservableList los registros de la DB en un ObservableArrayList
 	 * 
 	 * @return
 	 */
@@ -223,6 +235,7 @@ public class ControladorPeliculas implements Initializable {
 		ResultSet rs;
 		ObservableList<Pelicula> listaPeliculas = FXCollections.observableArrayList();
 		Connection conn = getConnection();
+		//sentencia SQL que seleccionará todas las entradas en la tabla
 		String query = "SELECT * FROM peliculas";
 		try {
 			st = conn.createStatement();
@@ -230,9 +243,11 @@ public class ControladorPeliculas implements Initializable {
 			Pelicula pelicula;
 
 			while (rs.next()) {
+				//Se crea una instancia de la clase Pelicula y se asigna a cada columna su tipo de dato y se almacena
 				pelicula = new Pelicula(rs.getInt("id"), rs.getString("titulo"), rs.getString("genero"),
 						rs.getString("duracion"), rs.getString("sinopsis"), rs.getString("idioma"),
 						rs.getString("pais"), rs.getString("actores"), rs.getString("fotografia"));
+				//se añade a la ObservableList
 				listaPeliculas.add(pelicula);
 			}
 		} catch (Exception e) {
@@ -247,9 +262,9 @@ public class ControladorPeliculas implements Initializable {
 	 */
 	public void mostrarPeliculas() {
 		ObservableList<Pelicula> lista = getListaPeliculas();
-		colId.setCellValueFactory(new PropertyValueFactory<Pelicula, Integer>("id"));
-		colTitulo.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("titulo"));
-		colGenero.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("genero"));
+		columnId.setCellValueFactory(new PropertyValueFactory<Pelicula, Integer>("id"));
+		columnTitulo.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("titulo"));
+		columnGenero.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("genero"));
 		columnDuracion.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("duracion"));
 		columnSinopsis.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("sinopsis"));
 		columnIdioma.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("idioma"));
@@ -264,7 +279,7 @@ public class ControladorPeliculas implements Initializable {
 	 * Inserta un registro y actualiza la lista de películas
 	 */
 	private void insertar() {
-		String query = "INSERT INTO peliculas VALUES (" + txtId.getText() + ", '" + txtTitulo.getText() + "', '"
+		String query = "INSERT INTO peliculas VALUES (" + tfId.getText() + ", '" + tfTitulo.getText() + "', '"
 				+ tfGenero.getText() + "', '" + tfDuracion.getText() + "', '" + tfSinopsis.getText() + "', '"
 				+ tfIdioma.getText() + "', '" + tfPais.getText() + "', '" + tfActores.getText() + "', '"
 				+ tfFotografia.getText() + "');";
@@ -276,10 +291,10 @@ public class ControladorPeliculas implements Initializable {
 	 * Edita un registro y actualiza la lista de películas
 	 */
 	private void editar() {
-		String query = "UPDATE peliculas SET titulo  = '" + txtTitulo.getText() + "', genero = '" + tfGenero.getText()
+		String query = "UPDATE peliculas SET titulo  = '" + tfTitulo.getText() + "', genero = '" + tfGenero.getText()
 				+ "', duracion = '" + tfDuracion.getText() + "', sinopsis = '" + tfSinopsis.getText() + "', idioma = '"
 				+ tfIdioma.getText() + "', pais = '" + tfPais.getText() + "', actores = '" + tfActores.getText()
-				+ "', fotografia = '" + tfFotografia.getText() + "' WHERE id = " + txtId.getText() + "";
+				+ "', fotografia = '" + tfFotografia.getText() + "' WHERE id = " + tfId.getText() + "";
 
 		executeQuery(query);
 		mostrarPeliculas();
@@ -289,7 +304,7 @@ public class ControladorPeliculas implements Initializable {
 	 * Elimina un registro y actualiza la lista de películas
 	 */
 	private void eliminar() {
-		String query = "DELETE FROM peliculas WHERE id =" + txtId.getText() + "";
+		String query = "DELETE FROM peliculas WHERE id =" + tfId.getText() + "";
 		executeQuery(query);
 		mostrarPeliculas();
 	}
