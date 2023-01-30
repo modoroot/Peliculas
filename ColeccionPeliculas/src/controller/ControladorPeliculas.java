@@ -2,15 +2,14 @@ package controller;
 
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -18,141 +17,193 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Conexion;
+import javafx.scene.input.MouseEvent;
 
 public class ControladorPeliculas implements Initializable {
-	@FXML
-	private TextField txtTitulo;
-	@FXML
-	private TextField txtDirector;
-	@FXML
-	private Button btnInsertar;
+
 	@FXML
 	private Button btnEditar;
+
 	@FXML
 	private Button btnEliminar;
+
 	@FXML
-	private TableView<Pelicula> tableView;
+	private Button btnInsertar;
+
+	@FXML
+	private TableColumn<Pelicula, String> colGenero;
+
 	@FXML
 	private TableColumn<Pelicula, Integer> colId;
+
 	@FXML
 	private TableColumn<Pelicula, String> colTitulo;
-	@FXML
-	private TableColumn<Pelicula, String> colDirector;
 
-	private ObservableList<Pelicula> listaPeliculas = FXCollections.observableArrayList();
-	
-	private Connection conn;
-	
-	public ControladorPeliculas() {
-		  conn = Conexion.getConnection();
-		}
+	@FXML
+	private TableColumn<Pelicula, String> columnActores;
+
+	@FXML
+	private TableColumn<Pelicula, String> columnDuracion;
+
+	@FXML
+	private TableColumn<Pelicula, String> columnFotografia;
+
+	@FXML
+	private TableColumn<Pelicula, String> columnIdioma;
+
+	@FXML
+	private TableColumn<Pelicula, String> columnPais;
+
+	@FXML
+	private TableColumn<Pelicula, String> columnSinopsis;
+
+	@FXML
+	private TableView<Pelicula> tablaPeliculas;
+
+	@FXML
+	private TextField tfActores;
+
+	@FXML
+	private TextField tfDuracion;
+
+	@FXML
+	private TextField tfGenero;
+
+	@FXML
+	private TextField tfIdioma;
+
+	@FXML
+	private TextField tfPais;
+
+	@FXML
+	private TextField tfSinopsis;
+
+	@FXML
+	private TextField txtTitulo;
+
+	@FXML
+	private TextField tfFotografia;
+
+	@FXML
+	private TextField txtId;
+
+	@FXML
+	void add(ActionEvent event) {
+		insertar();
+	}
+
+	@FXML
+	void editar(ActionEvent event) {
+		editar();
+	}
+
+	@FXML
+	void eliminar(ActionEvent event) {
+		eliminar();
+	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		tableView.setItems((ObservableList<Pelicula>) getData());
-
-		btnInsertar.setOnAction(event -> {
-			String titulo = txtTitulo.getText();
-			String director = txtDirector.getText();
-			insertarPelicula(titulo, director);
-			actualizarTabla();
-			limpiarCampos();
-		});
-
-		btnEditar.setOnAction(event -> {
-			Pelicula peliculaSeleccionada = tableView.getSelectionModel().getSelectedItem();
-			if (peliculaSeleccionada == null) {
-				return;
-			}
-			int id = peliculaSeleccionada.getId();
-			String titulo = txtTitulo.getText();
-			String director = txtDirector.getText();
-			editarPelicula(id, titulo, director);
-			actualizarTabla();
-			limpiarCampos();
-		});
-
-		btnEliminar.setOnAction(event -> {
-			Pelicula peliculaSeleccionada = tableView.getSelectionModel().getSelectedItem();
-			if (peliculaSeleccionada == null) {
-				return;
-			}
-			int id = peliculaSeleccionada.getId();
-			eliminarPelicula(id);
-			actualizarTabla();
-			limpiarCampos();
-		});
-		tableView.setOnMouseClicked(event -> {
-			Pelicula peliculaSeleccionada = tableView.getSelectionModel().getSelectedItem();
-			if (peliculaSeleccionada == null) {
-				return;
-			}
-			txtTitulo.setText(peliculaSeleccionada.getTitulo());
-			txtDirector.setText(peliculaSeleccionada.getDirector());
-		});
+		mostrarPeliculas();
 	}
 
-	public void insertarPelicula(String titulo, String director) {
-		// Insertar un nuevo registro en la base de datos
-		try (Connection conn = Conexion.getConnection()) {
-			String sql = "INSERT INTO peliculas (titulo, director) VALUES (?, ?)";
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, titulo);
-			stmt.setString(2, director);
-			stmt.executeUpdate();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
+	@FXML
+	void manejadorClick(MouseEvent event) {
+		Pelicula pelicula = tablaPeliculas.getSelectionModel().getSelectedItem();
+		txtId.setText(""+pelicula.getId());
+		txtTitulo.setText(pelicula.getTitulo());
+		tfGenero.setText(pelicula.getGenero());
+		tfDuracion.setText(pelicula.getDuracion());
+		tfSinopsis.setText(pelicula.getSinopsis());
+		tfIdioma.setText(pelicula.getIdioma());
+		tfPais.setText(pelicula.getPais());
+		tfActores.setText(pelicula.getActores());
+		tfFotografia.setText(pelicula.getFotografia());
 	}
 
-	public void editarPelicula(int id, String titulo, String director) {
-		// Editar un registro existente en la base de datos
-		try (Connection conn = Conexion.getConnection()) {
-			String sql = "UPDATE peliculas SET titulo = ?, director = ? WHERE id = ?";
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, titulo);
-			stmt.setString(2, director);
-			stmt.setInt(3, id);
-			stmt.executeUpdate();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	public void eliminarPelicula(int id) {
-		// Eliminar un registro existente en la base de datos
+	public Connection getConnection() {
+		Connection conn = null;
 		try {
-			String sql = "DELETE FROM peliculas WHERE id = ?";
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, id);
-			stmt.executeUpdate();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/peliculas", "root", "root");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
+		return conn;
 	}
 
-	public void actualizarTabla() {
-		// Actualizar el TableView con los datos en la base de datos
+	public ObservableList<Pelicula> getListaPeliculas() {
+		Statement st;
+		ResultSet rs;
+		ObservableList<Pelicula> listaPeliculas = FXCollections.observableArrayList();
+		Connection conn = getConnection();
+		String query = "SELECT * FROM peliculas";
 		try {
-			listaPeliculas.clear();
-			String sql = "SELECT * FROM peliculas";
-			ResultSet rs = conn.createStatement().executeQuery(sql);
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			Pelicula pelicula;
+
 			while (rs.next()) {
-				listaPeliculas.add(new Pelicula(rs.getInt("id"), rs.getString("titulo"), rs.getString("director")));
+				pelicula = new Pelicula(rs.getInt("id"), rs.getString("titulo"), rs.getString("genero"),
+						rs.getString("duracion"), rs.getString("sinopsis"), rs.getString("idioma"),
+						rs.getString("pais"), rs.getString("actores"), rs.getString("fotografia"));
+				listaPeliculas.add(pelicula);
 			}
-		} catch (SQLException ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaPeliculas;
+	}
+
+	public void mostrarPeliculas() {
+		ObservableList<Pelicula> lista = getListaPeliculas();
+		colId.setCellValueFactory(new PropertyValueFactory<Pelicula, Integer>("id"));
+		colTitulo.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("titulo"));
+		colGenero.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("genero"));
+		columnDuracion.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("duracion"));
+		columnSinopsis.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("sinopsis"));
+		columnIdioma.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("idioma"));
+		columnPais.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("pais"));
+		columnActores.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("actores"));
+		columnFotografia.setCellValueFactory(new PropertyValueFactory<Pelicula, String>("fotografia"));
+
+		tablaPeliculas.setItems(lista);
+	}
+
+	private void insertar() {
+		String query = "INSERT INTO peliculas VALUES (" + txtId.getText() + ", '" + txtTitulo.getText() + "', '"
+				+ tfGenero.getText() + "', '" + tfDuracion.getText() + "', '" + tfSinopsis.getText() + "', '"
+				+ tfIdioma.getText() + "', '" + tfPais.getText() + "', '" + tfActores.getText() + "', '"
+				+ tfFotografia.getText() + "');";
+		executeQuery(query);
+		mostrarPeliculas();
+	}
+
+	private void editar() {
+		String query = "UPDATE peliculas SET titulo  = '" + txtTitulo.getText() + "', genero = '" + tfGenero.getText()
+				+ "', duracion = '" + tfDuracion.getText() + "', sinopsis = '" + tfSinopsis.getText() + "', idioma = '"
+				+ tfIdioma.getText() + "', pais = '" + tfPais.getText() + "', actores = '" + tfActores.getText()
+				+ "', fotografia = '" + tfFotografia.getText() + "' WHERE id = " + txtId.getText() + "";
+
+		executeQuery(query);
+		mostrarPeliculas();
+	}
+
+	private void eliminar() {
+		String query = "DELETE FROM peliculas WHERE id =" + txtId.getText() + "";
+		executeQuery(query);
+		mostrarPeliculas();
+	}
+
+	private void executeQuery(String query) {
+		Connection conn = getConnection();
+		Statement st;
+		try {
+			st = conn.createStatement();
+			st.executeUpdate(query);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
-	public List<Pelicula> getData() {
-		  List<Pelicula> peliculas = new ArrayList<>();
-		  // Aquí se escribiría el código necesario para recuperar los datos de la base de datos y agregarlos a la lista de películas
-		  return peliculas;
-		}
-	private void limpiarCampos() {
-		txtTitulo.clear();
-		txtDirector.clear();
-	}
-	
+
 }

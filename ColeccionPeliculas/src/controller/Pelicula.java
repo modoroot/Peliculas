@@ -1,73 +1,87 @@
 package controller;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 public class Pelicula {
 
-	private IntegerProperty id;
-	private StringProperty titulo;
-	private StringProperty director;
-//	private IntegerProperty anio;
-
-	public Pelicula(int id, String titulo, String director) {
-		this.id = new SimpleIntegerProperty(id);
-		this.titulo = new SimpleStringProperty(titulo);
-		this.director = new SimpleStringProperty(director);
-//		this.anio = new SimpleIntegerProperty(anio);
+	private int id;
+	private String titulo;
+	private String genero;
+	private String duracion;
+	private String sinopsis;
+	private String idioma;
+	private String pais;
+	private String actores;
+	private String fotografia;
+	
+	
+	public Pelicula() {}
+	public Pelicula(int id, String titulo, String genero, String duracion, String sinopsis, String idioma, String pais,
+			String actores, String fotografia) {
+		this.id = id;
+		this.titulo = titulo;
+		this.genero = genero;
+		this.duracion = duracion;
+		this.sinopsis = sinopsis;
+		this.idioma = idioma;
+		this.pais = pais;
+		this.actores = actores;
+		this.fotografia = fotografia;
+		
 	}
-
-	// Getters y setters para cada atributo
 	public int getId() {
-		return id.get();
-	}
-
-	public void setId(int id) {
-		this.id.set(id);
-	}
-
-	public IntegerProperty idProperty() {
 		return id;
 	}
-
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getTitulo() {
-		return titulo.get();
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo.set(titulo);
-	}
-
-	public StringProperty tituloProperty() {
 		return titulo;
 	}
-
-	public String getDirector() {
-		return director.get();
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
-
-	public void setDirector(String director) {
-		this.director.set(director);
+	public String getGenero() {
+		return genero;
 	}
-
-	public StringProperty directorProperty() {
-		return director;
+	public void setGenero(String genero) {
+		this.genero = genero;
 	}
-
-//	public int getAño() {
-//		return anio.get();
-//	}
-//
-//	public void setAño(int anio) {
-//		this.anio.set(anio);
-//	}
-//
-//	public IntegerProperty añoProperty() {
-//		return anio;
-//	}
-
+	public String getDuracion() {
+		return duracion;
+	}
+	public void setDuracion(String duracion) {
+		this.duracion = duracion;
+	}
+	public String getSinopsis() {
+		return sinopsis;
+	}
+	public void setSinopsis(String sinopsis) {
+		this.sinopsis = sinopsis;
+	}
+	public String getIdioma() {
+		return idioma;
+	}
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
+	public String getPais() {
+		return pais;
+	}
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+	public String getActores() {
+		return actores;
+	}
+	public void setActores(String actores) {
+		this.actores = actores;
+	}
+	public String getFotografia() {
+		return fotografia;
+	}
+	public void setFotografia(String fotografia) {
+		this.fotografia = fotografia;
+	}
+	
 	
 	
 }

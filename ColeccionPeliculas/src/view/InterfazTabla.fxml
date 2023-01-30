@@ -34,11 +34,11 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TableView fx:id="tablaPeliculas" layoutY="166.0" prefHeight="434.0" prefWidth="1200.0" style="-fx-background-color: #21917f;">
+      <TableView fx:id="tablaPeliculas" editable="true" layoutY="166.0" onMouseClicked="#manejadorClick" prefHeight="434.0" prefWidth="1200.0" style="-fx-background-color: #21917f;">
         <columns>
           <TableColumn fx:id="colId" prefWidth="33.0" text="ID" />
           <TableColumn fx:id="colTitulo" prefWidth="199.0" text="Título" />
-            <TableColumn fx:id="colDirector" prefWidth="122.0" text="Género" />
+            <TableColumn fx:id="colGenero" prefWidth="122.0" text="Género" />
             <TableColumn fx:id="columnDuracion" prefWidth="84.0" text="Duración" />
             <TableColumn fx:id="columnSinopsis" prefWidth="266.0" text="Sinopsis" />
             <TableColumn fx:id="columnIdioma" prefWidth="106.0" text="Idioma" />
@@ -47,26 +47,27 @@
             <TableColumn fx:id="columnFotografia" prefWidth="168.0" text="Fotografía" />
         </columns>
       </TableView>
-      <Button fx:id="btnInsertar" layoutX="45.0" layoutY="42.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Añadir" />
-      <Button fx:id="btnEditar" layoutX="45.0" layoutY="84.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Editar" />
-      <Button fx:id="btnEliminar" layoutX="45.0" layoutY="127.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Eliminar" />
-      <TextField fx:id="txtTitulo" layoutX="311.0" layoutY="42.0" />
-      <TextField fx:id="tfDuracion" layoutX="311.0" layoutY="127.0" />
-      <TextField fx:id="tfSinopsis" layoutX="600.0" layoutY="42.0" />
-      <TextField fx:id="tfIdioma" layoutX="600.0" layoutY="84.0" />
-      <TextField fx:id="tfPais" layoutX="600.0" layoutY="127.0" />
-      <TextField fx:id="tfActores" layoutX="865.0" layoutY="42.0" />
-      <Label layoutX="239.0" layoutY="46.0" text="Título" />
-      <Label layoutX="239.0" layoutY="88.0" text="Género" />
-      <Label layoutX="239.0" layoutY="131.0" text="Duración" />
-      <Label layoutX="542.0" layoutY="46.0" text="Sinopsis" />
-      <Label layoutX="542.0" layoutY="88.0" text="Idioma" />
-      <Label layoutX="542.0" layoutY="131.0" text="País" />
-      <Label layoutX="818.0" layoutY="46.0" text="Actores" />
-      <Label layoutX="811.0" layoutY="88.0" text="Fotografía" />
+      <Button fx:id="btnInsertar" layoutX="45.0" layoutY="42.0" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Añadir" />
+      <Button fx:id="btnEditar" layoutX="45.0" layoutY="84.0" mnemonicParsing="false" onAction="#editar" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Editar" />
+      <Button fx:id="btnEliminar" layoutX="45.0" layoutY="127.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Eliminar" />
+      <TextField fx:id="txtTitulo" layoutX="311.0" layoutY="84.0" />
+      <TextField fx:id="tfDuracion" layoutX="600.0" layoutY="42.0" />
+      <TextField fx:id="tfGenero" layoutX="311.0" layoutY="119.0" />
+      <TextField fx:id="tfSinopsis" layoutX="600.0" layoutY="84.0" />
+      <TextField fx:id="tfIdioma" layoutX="600.0" layoutY="119.0" />
+      <TextField fx:id="tfPais" layoutX="865.0" layoutY="42.0" />
+      <TextField fx:id="tfActores" layoutX="865.0" layoutY="84.0" />
+      <Label layoutX="264.0" layoutY="88.0" text="Título" />
+      <Label layoutX="259.0" layoutY="123.0" text="Género" />
+      <Label layoutX="541.0" layoutY="46.0" text="Duración" />
+      <Label layoutX="543.0" layoutY="88.0" text="Sinopsis" />
+      <Label layoutX="546.0" layoutY="123.0" text="Idioma" />
+      <Label layoutX="820.0" layoutY="46.0" text="País" />
+      <Label layoutX="811.0" layoutY="88.0" text="Actores" />
+      <Label layoutX="803.0" layoutY="123.0" text="Fotografía" />
       <Separator layoutX="193.0" layoutY="25.0" orientation="VERTICAL" prefHeight="142.0" prefWidth="0.0" />
-      <TextField fx:id="tfGenero" layoutX="311.0" layoutY="84.0" />
-      <Button fx:id="btnFotografia" layoutX="914.0" layoutY="84.0" mnemonicParsing="false" text="Examinar..." />
-      <TextField fx:id="txtDirector" layoutX="876.0" layoutY="127.0" />
+      <TextField fx:id="tfFotografia" layoutX="865.0" layoutY="119.0" />
+      <TextField fx:id="txtId" layoutX="311.0" layoutY="42.0" />
+      <Label layoutX="273.0" layoutY="46.0" text="ID" />
    </children>
 </AnchorPane>
