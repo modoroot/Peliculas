@@ -1,5 +1,11 @@
 package controller;
 
+/**
+ * Clase que contiene atributos, constructores, Getters-Setters de las películas
+ * 
+ * @author Antonio Miguel Núñez Ariza
+ * @version 1.0
+ */
 public class Pelicula {
 
 	private int id;

@@ -13,11 +13,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class ControladorPeliculas implements Initializable {
 
@@ -29,6 +33,9 @@ public class ControladorPeliculas implements Initializable {
 
 	@FXML
 	private Button btnInsertar;
+
+	@FXML
+	private Button btnFotografia;
 
 	@FXML
 	private TableColumn<Pelicula, String> colGenero;
@@ -88,39 +95,90 @@ public class ControladorPeliculas implements Initializable {
 	private TextField txtId;
 
 	@FXML
+	private MenuItem menuItemActualizar;
+
+	@FXML
+	private MenuItem menuItemEliminar;
+
+	@FXML
+	private MenuItem menuItemNuevo;
+
+	@FXML
+	private ImageView imageViewFotografia;
+	
+
+	@FXML
+	void nuevoRegistroMenu(ActionEvent event) {
+			showModal();
+	}
+	
+	private void showModal() {
+		Stage modal = new Stage();
+		modal.initModality(Modality.APPLICATION_MODAL);
+		modal.show();
+	}
+
+	@FXML
+    void subirImagen(ActionEvent event) {
+		
+    }
+	/**
+	 * Evento del botón Añadir que añade un registro a la DB
+	 * @param event
+	 */
+	@FXML
 	void add(ActionEvent event) {
 		insertar();
 	}
-
+	/**
+	 * Evento del botón Editar que edita el registro seleccionado en la interfaz de la DB
+	 * @param event
+	 */
 	@FXML
 	void editar(ActionEvent event) {
 		editar();
 	}
-
+	/**
+	 * Evento del botón eliminar que elimina un registro seleccionado en la interfaz de la DB
+	 * @param event
+	 */
 	@FXML
 	void eliminar(ActionEvent event) {
 		eliminar();
 	}
-
+	/**
+	 * Al iniciar la aplicación ejecuta un método que muestra la lista de las películas actuales dentro de la DB
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		mostrarPeliculas();
 	}
-
+	/**
+	 * Sustituye el contenido de los TextField al hacer click en un registro
+	 * @param event
+	 */
 	@FXML
 	void manejadorClick(MouseEvent event) {
-		Pelicula pelicula = tablaPeliculas.getSelectionModel().getSelectedItem();
-		txtId.setText(""+pelicula.getId());
-		txtTitulo.setText(pelicula.getTitulo());
-		tfGenero.setText(pelicula.getGenero());
-		tfDuracion.setText(pelicula.getDuracion());
-		tfSinopsis.setText(pelicula.getSinopsis());
-		tfIdioma.setText(pelicula.getIdioma());
-		tfPais.setText(pelicula.getPais());
-		tfActores.setText(pelicula.getActores());
-		tfFotografia.setText(pelicula.getFotografia());
+		try {
+			Pelicula pelicula = tablaPeliculas.getSelectionModel().getSelectedItem();
+			txtId.setText("" + pelicula.getId());
+			txtTitulo.setText(pelicula.getTitulo());
+			tfGenero.setText(pelicula.getGenero());
+			tfDuracion.setText(pelicula.getDuracion());
+			tfSinopsis.setText(pelicula.getSinopsis());
+			tfIdioma.setText(pelicula.getIdioma());
+			tfPais.setText(pelicula.getPais());
+			tfActores.setText(pelicula.getActores());
+			tfFotografia.setText(pelicula.getFotografia());
+		} catch (Exception e) {
+			System.out.println("");
+		}
+		
 	}
-
+	/**
+	 * Objeto Connection para conectar a la DB
+	 * @return conexión exitosa
+	 */
 	public Connection getConnection() {
 		Connection conn = null;
 		try {
@@ -131,7 +189,11 @@ public class ControladorPeliculas implements Initializable {
 		}
 		return conn;
 	}
-
+	/**
+	 * Realiza una consulta de selección a la DB y guarda en la variable tipo ObservableList
+	 * los registros de la DB en un ArrayList
+	 * @return
+	 */
 	public ObservableList<Pelicula> getListaPeliculas() {
 		Statement st;
 		ResultSet rs;
@@ -154,7 +216,9 @@ public class ControladorPeliculas implements Initializable {
 		}
 		return listaPeliculas;
 	}
-
+	/**
+	 * Método para mostrar las películas. Se utiliza al iniciar la aplicación, insertar, editar, o eliminar un registro
+	 */
 	public void mostrarPeliculas() {
 		ObservableList<Pelicula> lista = getListaPeliculas();
 		colId.setCellValueFactory(new PropertyValueFactory<Pelicula, Integer>("id"));
@@ -169,7 +233,9 @@ public class ControladorPeliculas implements Initializable {
 
 		tablaPeliculas.setItems(lista);
 	}
-
+	/**
+	 * Inserta un registro y actualiza la lista de películas
+	 */
 	private void insertar() {
 		String query = "INSERT INTO peliculas VALUES (" + txtId.getText() + ", '" + txtTitulo.getText() + "', '"
 				+ tfGenero.getText() + "', '" + tfDuracion.getText() + "', '" + tfSinopsis.getText() + "', '"
@@ -178,7 +244,9 @@ public class ControladorPeliculas implements Initializable {
 		executeQuery(query);
 		mostrarPeliculas();
 	}
-
+	/**
+	 * Edita un registro y actualiza la lista de películas
+	 */
 	private void editar() {
 		String query = "UPDATE peliculas SET titulo  = '" + txtTitulo.getText() + "', genero = '" + tfGenero.getText()
 				+ "', duracion = '" + tfDuracion.getText() + "', sinopsis = '" + tfSinopsis.getText() + "', idioma = '"
@@ -188,13 +256,18 @@ public class ControladorPeliculas implements Initializable {
 		executeQuery(query);
 		mostrarPeliculas();
 	}
-
+	/**
+	 * Elimina un registro y actualiza la lista de películas
+	 */
 	private void eliminar() {
 		String query = "DELETE FROM peliculas WHERE id =" + txtId.getText() + "";
 		executeQuery(query);
 		mostrarPeliculas();
 	}
-
+	/**
+	 * Método que maneja las consultas SQL
+	 * @param query consulta a la DB
+	 */
 	private void executeQuery(String query) {
 		Connection conn = getConnection();
 		Statement st;
