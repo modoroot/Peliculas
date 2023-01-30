@@ -9,15 +9,17 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: #21917f;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControladorPeliculas">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="1200.0" style="-fx-background-color: #82bdf5;">
+      <MenuBar prefHeight="25.0" prefWidth="1200.0" style="-fx-background-color: #1e75c7;">
         <menus>
           <Menu mnemonicParsing="false" text="Registro">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Nuevo..." />
+                  <MenuItem fx:id="menuItemNuevo" mnemonicParsing="false" onAction="#nuevoRegistro" text="Nuevo..." />
               <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
@@ -36,38 +38,59 @@
       </MenuBar>
       <TableView fx:id="tablaPeliculas" editable="true" layoutY="166.0" onMouseClicked="#manejadorClick" prefHeight="434.0" prefWidth="1200.0" style="-fx-background-color: #21917f;">
         <columns>
-          <TableColumn fx:id="colId" prefWidth="33.0" text="ID" />
-          <TableColumn fx:id="colTitulo" prefWidth="199.0" text="Título" />
+          <TableColumn fx:id="colId" prefWidth="62.0" text="ID" />
+          <TableColumn fx:id="colTitulo" prefWidth="170.0" text="Título" />
             <TableColumn fx:id="colGenero" prefWidth="122.0" text="Género" />
-            <TableColumn fx:id="columnDuracion" prefWidth="84.0" text="Duración" />
-            <TableColumn fx:id="columnSinopsis" prefWidth="266.0" text="Sinopsis" />
-            <TableColumn fx:id="columnIdioma" prefWidth="106.0" text="Idioma" />
+            <TableColumn fx:id="columnDuracion" prefWidth="125.0" text="Duración" />
+            <TableColumn fx:id="columnSinopsis" prefWidth="204.0" text="Sinopsis" />
+            <TableColumn fx:id="columnIdioma" prefWidth="127.0" text="Idioma" />
             <TableColumn fx:id="columnPais" prefWidth="87.0" text="País" />
-            <TableColumn fx:id="columnActores" prefWidth="134.0" text="Actores" />
-            <TableColumn fx:id="columnFotografia" prefWidth="168.0" text="Fotografía" />
+            <TableColumn fx:id="columnActores" prefWidth="115.0" text="Actores" />
+            <TableColumn fx:id="columnFotografia" prefWidth="187.0" text="Fotografía" />
         </columns>
       </TableView>
-      <Button fx:id="btnInsertar" layoutX="45.0" layoutY="42.0" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Añadir" />
-      <Button fx:id="btnEditar" layoutX="45.0" layoutY="84.0" mnemonicParsing="false" onAction="#editar" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Editar" />
-      <Button fx:id="btnEliminar" layoutX="45.0" layoutY="127.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Eliminar" />
+      <Button fx:id="btnInsertar" layoutX="45.0" layoutY="42.0" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Añadir">
+         <graphic>
+            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/icon/add-icon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnEditar" layoutX="45.0" layoutY="84.0" mnemonicParsing="false" onAction="#editar" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Editar">
+         <graphic>
+            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/icon/edit-icon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnEliminar" layoutX="45.0" layoutY="127.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Eliminar">
+         <graphic>
+            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/icon/delete-icon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Separator layoutX="193.0" layoutY="25.0" orientation="VERTICAL" prefHeight="142.0" prefWidth="0.0" />
+      <TextField fx:id="tfFotografia" layoutX="865.0" layoutY="127.0" />
       <TextField fx:id="txtTitulo" layoutX="311.0" layoutY="84.0" />
+      <TextField fx:id="tfGenero" layoutX="311.0" layoutY="127.0" />
       <TextField fx:id="tfDuracion" layoutX="600.0" layoutY="42.0" />
-      <TextField fx:id="tfGenero" layoutX="311.0" layoutY="119.0" />
       <TextField fx:id="tfSinopsis" layoutX="600.0" layoutY="84.0" />
-      <TextField fx:id="tfIdioma" layoutX="600.0" layoutY="119.0" />
+      <TextField fx:id="tfIdioma" layoutX="600.0" layoutY="127.0" />
       <TextField fx:id="tfPais" layoutX="865.0" layoutY="42.0" />
       <TextField fx:id="tfActores" layoutX="865.0" layoutY="84.0" />
-      <Label layoutX="264.0" layoutY="88.0" text="Título" />
-      <Label layoutX="259.0" layoutY="123.0" text="Género" />
-      <Label layoutX="541.0" layoutY="46.0" text="Duración" />
-      <Label layoutX="543.0" layoutY="88.0" text="Sinopsis" />
-      <Label layoutX="546.0" layoutY="123.0" text="Idioma" />
-      <Label layoutX="820.0" layoutY="46.0" text="País" />
-      <Label layoutX="811.0" layoutY="88.0" text="Actores" />
-      <Label layoutX="803.0" layoutY="123.0" text="Fotografía" />
-      <Separator layoutX="193.0" layoutY="25.0" orientation="VERTICAL" prefHeight="142.0" prefWidth="0.0" />
-      <TextField fx:id="tfFotografia" layoutX="865.0" layoutY="119.0" />
       <TextField fx:id="txtId" layoutX="311.0" layoutY="42.0" />
       <Label layoutX="273.0" layoutY="46.0" text="ID" />
+      <Label layoutX="264.0" layoutY="88.0" text="Título" />
+      <Label layoutX="260.0" layoutY="131.0" text="Género" />
+      <Label layoutX="541.0" layoutY="46.0" text="Duración" />
+      <Label layoutX="543.0" layoutY="88.0" text="Sinopsis" />
+      <Label layoutX="547.0" layoutY="132.0" text="Idioma" />
+      <Label layoutX="820.0" layoutY="46.0" text="País" />
+      <Label layoutX="811.0" layoutY="88.0" text="Actores" />
+      <Label layoutX="803.0" layoutY="131.0" text="Fotografía" />
    </children>
 </AnchorPane>

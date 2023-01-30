@@ -12,6 +12,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/InterfazTabla.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
+        primaryStage.setTitle("Películas DB - Antonio Miguel Núñez Ariza");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
