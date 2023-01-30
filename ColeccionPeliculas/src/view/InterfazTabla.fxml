@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: #21917f;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControladorPeliculas">
+   <children>
+      <MenuBar prefHeight="25.0" prefWidth="1200.0" style="-fx-background-color: #82bdf5;">
+        <menus>
+          <Menu mnemonicParsing="false" text="Registro">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Nuevo..." />
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Editar">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Actualizar" />
+              <MenuItem mnemonicParsing="false" text="Eliminar" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Ayuda">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TableView fx:id="tablaPeliculas" layoutY="166.0" prefHeight="434.0" prefWidth="1200.0" style="-fx-background-color: #21917f;">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="33.0" text="ID" />
+          <TableColumn fx:id="colTitulo" prefWidth="199.0" text="Título" />
+            <TableColumn fx:id="colDirector" prefWidth="122.0" text="Género" />
+            <TableColumn fx:id="columnDuracion" prefWidth="84.0" text="Duración" />
+            <TableColumn fx:id="columnSinopsis" prefWidth="266.0" text="Sinopsis" />
+            <TableColumn fx:id="columnIdioma" prefWidth="106.0" text="Idioma" />
+            <TableColumn fx:id="columnPais" prefWidth="87.0" text="País" />
+            <TableColumn fx:id="columnActores" prefWidth="134.0" text="Actores" />
+            <TableColumn fx:id="columnFotografia" prefWidth="168.0" text="Fotografía" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnInsertar" layoutX="45.0" layoutY="42.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Añadir" />
+      <Button fx:id="btnEditar" layoutX="45.0" layoutY="84.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Editar" />
+      <Button fx:id="btnEliminar" layoutX="45.0" layoutY="127.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #1e75c7;" text="Eliminar" />
+      <TextField fx:id="txtTitulo" layoutX="311.0" layoutY="42.0" />
+      <TextField fx:id="tfDuracion" layoutX="311.0" layoutY="127.0" />
+      <TextField fx:id="tfSinopsis" layoutX="600.0" layoutY="42.0" />
+      <TextField fx:id="tfIdioma" layoutX="600.0" layoutY="84.0" />
+      <TextField fx:id="tfPais" layoutX="600.0" layoutY="127.0" />
+      <TextField fx:id="tfActores" layoutX="865.0" layoutY="42.0" />
+      <Label layoutX="239.0" layoutY="46.0" text="Título" />
+      <Label layoutX="239.0" layoutY="88.0" text="Género" />
+      <Label layoutX="239.0" layoutY="131.0" text="Duración" />
+      <Label layoutX="542.0" layoutY="46.0" text="Sinopsis" />
+      <Label layoutX="542.0" layoutY="88.0" text="Idioma" />
+      <Label layoutX="542.0" layoutY="131.0" text="País" />
+      <Label layoutX="818.0" layoutY="46.0" text="Actores" />
+      <Label layoutX="811.0" layoutY="88.0" text="Fotografía" />
+      <Separator layoutX="193.0" layoutY="25.0" orientation="VERTICAL" prefHeight="142.0" prefWidth="0.0" />
+      <TextField fx:id="tfGenero" layoutX="311.0" layoutY="84.0" />
+      <Button fx:id="btnFotografia" layoutX="914.0" layoutY="84.0" mnemonicParsing="false" text="Examinar..." />
+      <TextField fx:id="txtDirector" layoutX="876.0" layoutY="127.0" />
+   </children>
+</AnchorPane>
