@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 /**
  * Clase que contiene atributos, constructores, Getters-Setters de las películas

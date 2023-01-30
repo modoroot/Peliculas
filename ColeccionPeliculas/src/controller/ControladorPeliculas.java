@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,17 +12,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Pelicula;
 
 public class ControladorPeliculas implements Initializable {
 
@@ -36,6 +39,12 @@ public class ControladorPeliculas implements Initializable {
 
 	@FXML
 	private Button btnFotografia;
+
+	@FXML
+	private Button btnAceptar;
+
+	@FXML
+	private Button btnCancelar;
 
 	@FXML
 	private TableColumn<Pelicula, String> colGenero;
@@ -104,57 +113,68 @@ public class ControladorPeliculas implements Initializable {
 	private MenuItem menuItemNuevo;
 
 	@FXML
-	private ImageView imageViewFotografia;
-	
-
-	@FXML
 	void nuevoRegistroMenu(ActionEvent event) {
-			showModal();
-	}
-	
-	private void showModal() {
-		Stage modal = new Stage();
-		modal.initModality(Modality.APPLICATION_MODAL);
-		modal.show();
+		showModal();
 	}
 
-	@FXML
-    void subirImagen(ActionEvent event) {
-		
-    }
+	private void showModal() {
+		FXMLLoader loader = new FXMLLoader();
+		try {
+		    loader.setLocation(getClass().getResource("/view/InterfazModalNuevoRegistro.fxml"));
+		    Scene scene = new Scene(loader.load());
+		    Stage modal = new Stage();
+		    modal.initModality(Modality.APPLICATION_MODAL);
+		    modal.setScene(scene);
+		    modal.show();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Evento del botón Añadir que añade un registro a la DB
+	 * 
 	 * @param event
 	 */
 	@FXML
 	void add(ActionEvent event) {
 		insertar();
 	}
+
 	/**
-	 * Evento del botón Editar que edita el registro seleccionado en la interfaz de la DB
+	 * Evento del botón Editar que edita el registro seleccionado en la interfaz de
+	 * la DB
+	 * 
 	 * @param event
 	 */
 	@FXML
 	void editar(ActionEvent event) {
 		editar();
 	}
+
 	/**
-	 * Evento del botón eliminar que elimina un registro seleccionado en la interfaz de la DB
+	 * Evento del botón eliminar que elimina un registro seleccionado en la interfaz
+	 * de la DB
+	 * 
 	 * @param event
 	 */
 	@FXML
 	void eliminar(ActionEvent event) {
 		eliminar();
 	}
+
 	/**
-	 * Al iniciar la aplicación ejecuta un método que muestra la lista de las películas actuales dentro de la DB
+	 * Al iniciar la aplicación ejecuta un método que muestra la lista de las
+	 * películas actuales dentro de la DB
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		mostrarPeliculas();
 	}
+
 	/**
 	 * Sustituye el contenido de los TextField al hacer click en un registro
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -173,10 +193,12 @@ public class ControladorPeliculas implements Initializable {
 		} catch (Exception e) {
 			System.out.println("");
 		}
-		
+
 	}
+
 	/**
 	 * Objeto Connection para conectar a la DB
+	 * 
 	 * @return conexión exitosa
 	 */
 	public Connection getConnection() {
@@ -189,9 +211,11 @@ public class ControladorPeliculas implements Initializable {
 		}
 		return conn;
 	}
+
 	/**
-	 * Realiza una consulta de selección a la DB y guarda en la variable tipo ObservableList
-	 * los registros de la DB en un ArrayList
+	 * Realiza una consulta de selección a la DB y guarda en la variable tipo
+	 * ObservableList los registros de la DB en un ArrayList
+	 * 
 	 * @return
 	 */
 	public ObservableList<Pelicula> getListaPeliculas() {
@@ -216,8 +240,10 @@ public class ControladorPeliculas implements Initializable {
 		}
 		return listaPeliculas;
 	}
+
 	/**
-	 * Método para mostrar las películas. Se utiliza al iniciar la aplicación, insertar, editar, o eliminar un registro
+	 * Método para mostrar las películas. Se utiliza al iniciar la aplicación,
+	 * insertar, editar, o eliminar un registro
 	 */
 	public void mostrarPeliculas() {
 		ObservableList<Pelicula> lista = getListaPeliculas();
@@ -233,6 +259,7 @@ public class ControladorPeliculas implements Initializable {
 
 		tablaPeliculas.setItems(lista);
 	}
+
 	/**
 	 * Inserta un registro y actualiza la lista de películas
 	 */
@@ -244,6 +271,7 @@ public class ControladorPeliculas implements Initializable {
 		executeQuery(query);
 		mostrarPeliculas();
 	}
+
 	/**
 	 * Edita un registro y actualiza la lista de películas
 	 */
@@ -256,6 +284,7 @@ public class ControladorPeliculas implements Initializable {
 		executeQuery(query);
 		mostrarPeliculas();
 	}
+
 	/**
 	 * Elimina un registro y actualiza la lista de películas
 	 */
@@ -264,8 +293,10 @@ public class ControladorPeliculas implements Initializable {
 		executeQuery(query);
 		mostrarPeliculas();
 	}
+
 	/**
 	 * Método que maneja las consultas SQL
+	 * 
 	 * @param query consulta a la DB
 	 */
 	private void executeQuery(String query) {

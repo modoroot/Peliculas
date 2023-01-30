@@ -15,28 +15,22 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: #21917f;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControladorPeliculas">
    <children>
-      <ImageView fx:id="imageViewFotografia" fitHeight="76.0" fitWidth="81.0" layoutX="1064.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" />
       <MenuBar prefHeight="25.0" prefWidth="1200.0" style="-fx-background-color: #1e75c7;">
         <menus>
           <Menu mnemonicParsing="false" text="Registro">
             <items>
-                  <MenuItem fx:id="menuItemNuevo" mnemonicParsing="false" onAction="#nuevoRegistroMenu" text="Nuevo..." />
+                  <MenuItem fx:id="menuItemNuevo" mnemonicParsing="false" onAction="#nuevoRegistroMenu" text="Nuevo registro..." />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Editar">
             <items>
-                  <MenuItem fx:id="menuItemActualizar" mnemonicParsing="false" text="Actualizar" />
-              <MenuItem fx:id="menuItemEliminar" mnemonicParsing="false" text="Eliminar" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Ayuda">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem fx:id="menuItemActualizar" mnemonicParsing="false" onAction="#editar" text="Editar registro seleccionado" />
+              <MenuItem fx:id="menuItemEliminar" mnemonicParsing="false" onAction="#eliminar" text="Eliminar registro seleccionado" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <TableView fx:id="tablaPeliculas" editable="true" layoutY="166.0" onMouseClicked="#manejadorClick" prefHeight="434.0" prefWidth="1200.0" style="-fx-background-color: #21917f;">
+      <TableView fx:id="tablaPeliculas" editable="true" layoutY="167.0" onMouseClicked="#manejadorClick" prefHeight="435.0" prefWidth="1200.0" style="-fx-background-color: #21917f;">
         <columns>
           <TableColumn fx:id="colId" prefWidth="62.0" text="ID" />
           <TableColumn fx:id="colTitulo" prefWidth="170.0" text="Título" />
@@ -92,6 +86,5 @@
       <Label layoutX="820.0" layoutY="46.0" text="País" />
       <Label layoutX="811.0" layoutY="88.0" text="Actores" />
       <Label layoutX="803.0" layoutY="131.0" text="Fotografía" />
-      <Button fx:id="btnFotografia" layoutX="1069.0" layoutY="51.0" mnemonicParsing="false" onAction="#subirImagen" style="-fx-background-color: #1e75c7;" text="Examinar..." />
    </children>
 </AnchorPane>
