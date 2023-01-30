@@ -149,6 +149,7 @@ public class ControladorPeliculas implements Initializable {
 	@FXML
 	void add(ActionEvent event) {
 		insertar();
+		limpiarCampos();
 	}
 
 	/**
@@ -160,6 +161,7 @@ public class ControladorPeliculas implements Initializable {
 	@FXML
 	void editar(ActionEvent event) {
 		editar();
+		limpiarCampos();
 	}
 
 	/**
@@ -171,6 +173,7 @@ public class ControladorPeliculas implements Initializable {
 	@FXML
 	void eliminar(ActionEvent event) {
 		eliminar();
+		limpiarCampos();
 	}
 
 	/**
@@ -323,6 +326,21 @@ public class ControladorPeliculas implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Limpia los campos de datos de los TextField
+	 */
+	private void limpiarCampos() {
+		tfActores.clear();
+		tfDuracion.clear();
+		tfFotografia.clear();
+		tfGenero.clear();
+		tfId.clear();
+		tfIdioma.clear();
+		tfPais.clear();
+		tfSinopsis.clear();
+		tfTitulo.clear();
 	}
 
 }
