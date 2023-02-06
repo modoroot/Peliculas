@@ -1,10 +1,14 @@
 package model;
 	
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import com.antonio.pantallalogin.Login;
+
 /**
  * Clase lanzadora (Main)
  * @author Antonio Miguel Núñez Ariza
@@ -13,12 +17,20 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/InterfazTabla.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Películas DB - Antonio Miguel Núñez Ariza");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    	Login login = new Login(stage->{
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/InterfazTabla.fxml"));
+            Parent root = null;
+			try {
+				root = loader.load();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Películas DB - Antonio Miguel Núñez Ariza");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+    	});
+    	login.show();
     }
     public static void main(String[] args) {
         launch(args);

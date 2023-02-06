@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-01-2023 a las 22:46:12
+-- Tiempo de generación: 06-02-2023 a las 17:44:15
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -44,7 +44,28 @@ CREATE TABLE `peliculas` (
 --
 
 INSERT INTO `peliculas` (`id`, `titulo`, `genero`, `duracion`, `sinopsis`, `idioma`, `pais`, `actores`, `fotografia`) VALUES
-(1, 'asdddddd', 'asdasdddsadsdasda', 'dsd', 'saddsa', '', 'asdsa', 'saddas', 'asdsa');
+(1, 'as', 'asdasdddsadsdasda', 'dsd', 'saddsa', 'dssd', 'asdsa', 'saddas', 'asdsa'),
+(123, 'asd', 'asd', '', '', '', '', '', ''),
+(123321, 'dsasdas', '', '', '', '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `usuario` varchar(100) NOT NULL,
+  `contrasenia` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `usuario`, `contrasenia`) VALUES
+(1, 'usuario', 'usuario');
 
 --
 -- Índices para tablas volcadas
@@ -55,6 +76,22 @@ INSERT INTO `peliculas` (`id`, `titulo`, `genero`, `duracion`, `sinopsis`, `idio
 --
 ALTER TABLE `peliculas`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
