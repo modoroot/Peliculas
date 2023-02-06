@@ -17,7 +17,9 @@ import com.antonio.pantallalogin.Login;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
+    	//Creación del objeto Login
     	Login login = new Login(stage->{
+    		// Carga del archivo FXML que contiene la interfaz para la tabla
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/InterfazTabla.fxml"));
             Parent root = null;
 			try {
